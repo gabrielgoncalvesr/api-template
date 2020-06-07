@@ -19,7 +19,7 @@ const authenticate = async (request, response) => {
     if (user) {
         await comparePassword(password, user.password, (valid) => {
             if (valid) {
-                const token = JWT.sign({ sub: user.id }, process.env.SECRET_JWT);
+                const token = JWT.sign({ sub: user.id }, process.env.API_SECRET_JWT);
 
                 response.json({ ...user, token })
             } else {
