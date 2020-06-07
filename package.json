@@ -4,7 +4,7 @@
     "description": "fazae application",
     "main": "index.js",
     "scripts": {
-        "migrate": "sequelize db:migrate",
+        "migrate": "sequelize db:migrate && sequelize db:seed:all",
         "start": "node src/server.js",
         "dev": "set NODE_ENV=development&& nodemon -r dotenv/config src/server.js",
         "test": "echo \"Error: no test specified\" && exit 1"
