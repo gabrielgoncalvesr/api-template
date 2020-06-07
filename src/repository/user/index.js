@@ -14,4 +14,22 @@ const getUser = async ({ email }) => {
     });
 }
 
-module.exports.getUser = getUser;
+const updateUser = async (user) => {
+    return await User.update(
+        { ...user },
+        {
+            where: {
+                email: user.email
+            }
+        }
+    ).success(result => {
+        return true;
+    }).error(err => {
+        return false;
+    });
+}
+
+module.exports = {
+    updateUser,
+    getUser
+}
