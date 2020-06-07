@@ -26,10 +26,12 @@ module.exports = {
                 type: DataTypes.STRING,
             },
             createdAt: {
+                timestamps:true,
                 allowNull: false,
                 type: DataTypes.DATE,
             },
             updatedAt: {
+                timestamps:true,
                 allowNull: false,
                 type: DataTypes.DATE,
             },
