@@ -20,15 +20,15 @@ jobs:
           DB_USERNAME: user
           DB_PASSWORD: password
           DB_DATABASE: test
-          DB_PORT: 3306
-          DB_HOST: 0.0.0.0
+          DB_PORT: 33306
+          DB_HOST: 127.0.0.1
 
           MYSQL_USER: user
           MYSQL_PASSWORD: password
           MYSQL_DATABASE: test
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: password 
         ports:
-          - 3306
+          - 33306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
