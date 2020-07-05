@@ -14,14 +14,10 @@ const getUser = async ({ email }) => {
     });
 }
 
-const updateUser = async (user) => {
+const updateUser = async ({ user }) => {
     return await User.update(
         { ...user },
-        {
-            where: {
-                email: user.email
-            }
-        }
+        { where: { email: user.email } }
     ).success(result => {
         return true;
     }).error(err => {
@@ -30,6 +26,6 @@ const updateUser = async (user) => {
 }
 
 module.exports = {
+    getUser,
     updateUser,
-    getUser
 }
