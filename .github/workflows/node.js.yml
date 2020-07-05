@@ -17,16 +17,10 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          DB_USERNAME: user
-          DB_PASSWORD: password
-          DB_DATABASE: test
-          DB_PORT: 33306
-          DB_HOST: 127.0.0.1
-
+          MYSQL_ROOT_PASSWORD: password
           MYSQL_USER: user
           MYSQL_PASSWORD: password
           MYSQL_DATABASE: test
-          MYSQL_ROOT_PASSWORD: password 
         ports:
           - 33306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -65,4 +59,9 @@ jobs:
       run: |
         npm test
       env:
+        DB_USERNAME: user
+        DB_PASSWORD: password
+        DB_DATABASE: test
+        DB_HOST: 127.0.0.1
+        DB_PORT: ${{ job.services.mysql.ports[3306] }}
         API_SECRET_JWT: ${{ secrets.API_SECRET_JWT }}
