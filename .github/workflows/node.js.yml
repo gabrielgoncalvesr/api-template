@@ -26,6 +26,12 @@ jobs:
     - name: Runnnig Tests
       run: |
         touch .env
-        echo ENGINE_API_KEY =${{ secrets.API_SECRET_JWT }} >> .env  
+        echo ${{ secrets.API_SECRET_JWT }}
+        echo API_SECRET_JWT =${{ secrets.API_SECRET_JWT }} >> .env  
         npm test
-        rm .env
+      env:
+        API_SECRET_JWT: ${{ secrets.API_SECRET_JWT }}
+
+    - name: Removing .env File
+      run: rm .env
+
