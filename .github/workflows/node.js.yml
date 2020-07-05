@@ -37,6 +37,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+    - name: Check MYSQL connection
+        env:
+          PORT: ${{ job.services.mariadb.ports[3306] }}
+        run: |
+          while ! mysqladmin ping -h"127.0.0.1" -P"$PORT" --silent; do
+            echo checking
+            sleep 1
+          done
+
     - name: Running CI
       run: |
         npm ci
