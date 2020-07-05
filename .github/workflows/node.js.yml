@@ -13,13 +13,25 @@ jobs:
       matrix:
         node-version: [10.x, 12.x, 14.x]
 
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test
+        ports:
+          - 33306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
-    - uses: actions/checkout@v2
+    - name: Setting Checkout
+      uses: actions/checkout@v2
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    
+
     - name: Running CI
       run: |
         npm ci
@@ -34,12 +46,6 @@ jobs:
 
     - name: Runnnig Tests
       run: |
-        touch .env
-        cat .env
-        echo API_SECRET_JWT =${{ secrets.API_SECRET_JWT }} >> .env  
         npm test
       env:
         API_SECRET_JWT: ${{ secrets.API_SECRET_JWT }}
-
-    - name: Removing .env File
-      run: rm .env
