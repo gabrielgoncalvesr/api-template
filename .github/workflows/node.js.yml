@@ -57,6 +57,7 @@ jobs:
 
     - name: Runnnig Tests
       run: |
+        npm run migrate
         npm test
       env:
         DB_USERNAME: user
