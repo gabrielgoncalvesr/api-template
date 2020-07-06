@@ -6,7 +6,7 @@ const post = async (url, query, params, headers) => {
             return response;
         })
         .catch(function (error) {
-            console.log(error);
+            return response;
         });
 
     return response;
@@ -18,7 +18,7 @@ const get = async (url, query, headers) => {
             return response;
         })
         .catch(function (error) {
-            console.log(error);
+            return response;
         });
 
     return response;
