@@ -1,13 +1,38 @@
 const request = require('supertest');
+const SequelizeMock = require("sequelize-mock");
+
 const app = require('../../src/app');
 
 const models = require('../../database/models');
 
-describe('Login test', () => {
-    // beforeEach(async () => {
-    //     await connection.migrate.rollback();
-    //     await connection.migrate.latest();
-    // });
+jest.mock('../../database/models/user.js', () => () => {
+
+    const sequelizeMock = new SequelizeMock();
+
+    return sequelizeMock.define('user', {
+        id: 3,
+        telephoneNumber: '11900000001',
+        password: '$2b$10$nIlZ62WxfqtU.NHtnVVHlex/YkeTyRsc//DnP.zq64fO/ji4P345K',
+        name: 'test',
+        email: 'test@test.com',
+    });
+});
+
+describe('Login Tests', () => {
+
+    let token = null;
+
+    beforeAll(async () => {
+        const response = await request(app)
+            .post('/authenticate')
+            .send({
+                email: "gabriel@gmail.com",
+                password: "123456",
+            });
+
+        token = response.body.token;
+        console.log(token)
+    })
 
     afterAll(async () => {
         await models.sequelize.close();
@@ -75,6 +100,22 @@ describe('Login test', () => {
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe("user not found");
+    });
+
+    it('should be able to reset password', async () => {
+        const response = await request(app)
+            .put('/changePassword')
+            .set('Authorization', 'Bearer ' + token)
+            .send({
+                email: 'gabriel@gmail.com',
+                password: '123456',
+                newPassword: '1234567'
+            });
+
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('message');
+        expect(response.body.message).toBe('password changed with success');
+
     });
 
     // it('should be return a exception of invalid email', async () => {
