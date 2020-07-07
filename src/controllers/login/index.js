@@ -3,7 +3,7 @@ const { celebrate, Joi, errors, Segments } = require('celebrate');
 
 const router = express.Router();
 
-const { authenticate } = require('../../services/login')
+const { authenticate, changePassword } = require('../../services/login')
 
 router.post('/authenticate', celebrate({
     [Segments.BODY]: Joi.object().keys({
@@ -11,6 +11,14 @@ router.post('/authenticate', celebrate({
         password: Joi.string().required()
     })
 }), authenticate);
+
+router.put('/changePassword', celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        email: Joi.string().required(),
+        password: Joi.string().required(),
+        newPassword: Joi.string().required()
+    })
+}), changePassword);
 
 router.get('/test', (request, response) => {
     response.json({ "teste": "teste" });
