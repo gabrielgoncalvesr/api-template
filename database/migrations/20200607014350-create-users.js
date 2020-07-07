@@ -21,17 +21,22 @@ module.exports = {
                 allowNull: false,
                 type: DataTypes.BIGINT(11),
             },
+            cpf: {
+                unique: true,
+                allowNull: false,
+                type: DataTypes.STRING,
+            },
             password: {
                 allowNull: false,
                 type: DataTypes.STRING,
             },
             createdAt: {
-                timestamps:true,
+                timestamps: true,
                 allowNull: false,
                 type: DataTypes.DATE,
             },
             updatedAt: {
-                timestamps:true,
+                timestamps: true,
                 allowNull: false,
                 type: DataTypes.DATE,
             },

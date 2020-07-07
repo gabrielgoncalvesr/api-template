@@ -4,10 +4,10 @@
     "description": "fazae application",
     "main": "index.js",
     "scripts": {
-        "migrate": "sequelize db:migrate && sequelize db:seed:all",
+        "test": "jest",
         "start": "node src/server.js",
         "dev": "set NODE_ENV=development&& nodemon -r dotenv/config src/server.js",
-        "test": "jest"
+        "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate:undo && sequelize db:migrate && sequelize db:seed:all"
     },
     "author": "Gabriel Reis and Igor Melo",
     "license": "ISC",
@@ -31,7 +31,6 @@
     "devDependencies": {
         "jest": "^26.1.0",
         "nodemon": "^2.0.3",
-        "sequelize-mock": "^0.10.2",
         "supertest": "^4.0.2"
     }
 }
