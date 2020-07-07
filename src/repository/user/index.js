@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 
 const { User } = require('../../../database/models');
 
-const getUser = async ({ email }) => {
+const getUser = async (email) => {
     return await User.findOne({
         raw: true,
         where: {
@@ -13,11 +13,11 @@ const getUser = async ({ email }) => {
     });
 }
 
-const updateUser = async ({ user }) => {
+const updateUser = async (user) => {
     return await User.update(
         { ...user },
         { where: { email: user.email } }
-    ).success(result => {
+    ).then(result => {
         return true;
     }).error(err => {
         return false;

@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
         },
+        cpf: {
+            unique: true,
+            type: DataTypes.STRING,
+        },
         telephoneNumber: {
             unique: true,
             type: DataTypes.BIGINT(11),
