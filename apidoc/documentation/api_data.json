@@ -54,7 +54,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"email\": \"gabriel@gmail.com\",\n  \"name\": 'Gabriel'\"\n  \"token\": \"eyJhbGciOiJIUGDGdNsasdiIsdInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTUGFAsa564Nn0._5yhuU7l9tEodMwwjbC6sMbIwETT9R1TKkMgDJZfRYw\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n    \"email\": \"gabriel@gmail.com\",\n    \"name\": 'Gabriel'\"\n    \"token\": \"eyJhbGciOiJIUGDGddiIsdIkpXVCJ9.eyJzdWIiOj6MTUGFAsa564Nn0._5yhuU7lIwETT9R1TKkMgDJZfRYw\"\n}",
           "type": "json"
         }
       ]
@@ -123,20 +123,20 @@
     "group": "Login",
     "header": {
       "fields": {
-        "MyHeaderGroup": [
+        "Headers": [
           {
-            "group": "MyHeaderGroup",
+            "group": "Headers",
             "type": "String",
             "optional": false,
-            "field": "authorization",
-            "description": "<p>Authorization value.</p>"
+            "field": "Authorization",
+            "description": "<p>Authorization token.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Header-Example:",
-          "content": "{\n  \"Accept-Encoding\": \"Accept-Encoding: gzip, deflate\"\n}",
+          "content": "{\n    \"Authorization\": \"Bearer eyJhbGciOiJIUGDGddiIsdIkpXVCJ9.eyJzdWIiOj6MTUGFAsa564Nn0._5yhuU7lIwETT9R1TKkMgDJZfRYw\"\n}",
           "type": "json"
         }
       ]
@@ -183,7 +183,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n  \"message\": \"password changed with success\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n    \"message\": \"password changed with success\"\n}",
           "type": "json"
         }
       ]
@@ -191,12 +191,6 @@
     "error": {
       "fields": {
         "Error 4xx": [
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "401/Unauthorized",
-            "description": "<p>Invalid basic auth credentials supplied.</p>"
-          },
           {
             "group": "Error 4xx",
             "optional": false,
@@ -232,27 +226,27 @@
       "examples": [
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"email\\\" is required\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"email\\\" is required\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"password\\\" is required\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"password\\\" is required\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"newPassword\\\" is required\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"newPassword\\\" is required\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 404 Bad Request\n{\n  \"message\": \"user not found\"\n}",
+          "content": "HTTP/1.1 404 Bad Request\n{\n    \"message\": \"user not found\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"incorrect password\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"incorrect password\"\n}",
           "type": "json"
         }
       ]
