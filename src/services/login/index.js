@@ -7,7 +7,7 @@ const { getUser, updateUser } = require('../../repository/user');
 const authenticate = async (request, response) => {
     const { email, password } = request.body;
 
-    const user = await getUser(email);
+    const user = await getUser({ email });
     if (!user) {
         return response.status(404).json({ message: 'user not found' });
     }
@@ -27,7 +27,7 @@ const authenticate = async (request, response) => {
 const changePassword = async (request, response) => {
     const { email, password, newPassword } = request.body;
 
-    const user = await getUser(email);
+    const user = await getUser({ email });
     if (!user) {
         return response.status(404).json({ message: 'user not found' });
     }

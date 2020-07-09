@@ -1,8 +1,8 @@
 const request = require('supertest');
 
-const app = require('../../src/app');
-const models = require('../../database/models');
-const { User } = require('../../database/models');
+const app = require('../../../src/app.js');
+const models = require('../../../database/models');
+const { User } = require('../../../database/models');
 
 describe('Login Tests', () => {
 
@@ -15,8 +15,8 @@ describe('Login Tests', () => {
             cpf: '54897877411',
             createdAt: new Date(),
             updatedAt: new Date(),
-            email: 'test@test.com',
-            telephoneNumber: '11900000000',
+            email: 'test1@test.com',
+            telephoneNumber: '11911111111',
             password: '$2b$10$nIlZ62WxfqtU.NHtnVVHlex/YkeTyRsc//DnP.zq64fO/ji4P345K',
         });
 
@@ -38,50 +38,6 @@ describe('Login Tests', () => {
         await models.sequelize.close();
     });
 
-    it('should be able to authenticate with login', async () => {
-        const response = await request(app).post('/authenticate').send({
-            email: user.email,
-            password: "123456",
-        });
-
-        expect(response.status).toBe(200);
-        expect(response.body).toHaveProperty('email');
-    });
-
-    it('should be return a exception of missing properties in login', async () => {
-        let response = await request(app).post('/authenticate').send({ email: user.email });
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"password\" is required");
-
-        response = await request(app).post('/authenticate').send({ password: "123456" });
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"email\" is required");
-    });
-
-    it('should be return a exception of wrong password in login', async () => {
-        const response = await request(app).post('/authenticate').send({
-            email: user.email,
-            password: "1234561",
-        });
-
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("incorrect password");
-    });
-
-    it('should be return a exception of not found user in login', async () => {
-        const response = await request(app).post('/authenticate').send({
-            email: "error@gmail.com",
-            password: "123456",
-        });
-
-        expect(response.status).toBe(404);
-        expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("user not found");
-    });
-
     it('should be able to reset password', async () => {
         const response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
             email: user.email,
@@ -95,10 +51,10 @@ describe('Login Tests', () => {
 
     });
 
-    it('should be return a exception of incorrect password to password change', async () => {
+    it('should be return a exception of incorrect password', async () => {
         const response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
             email: user.email,
-            password: '123456',
+            password: 'AAAAAAAA',
             newPassword: '1234567'
         });
 
@@ -107,7 +63,7 @@ describe('Login Tests', () => {
         expect(response.body.message).toBe('incorrect password');
     });
 
-    it('should be return a exception of user not found to password change', async () => {
+    it('should be return a exception of user not found', async () => {
         const response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
             email: 'error@gmail.com',
             password: '123456',
@@ -119,8 +75,8 @@ describe('Login Tests', () => {
         expect(response.body.message).toBe('user not found');
     });
 
-    it('should be return a exception of missing properties in password change', async () => {
-        let response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
+    it('should be return a exception of missing email', async () => {
+        const response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
             password: '123456',
             newPassword: '1234567'
         });
@@ -128,8 +84,10 @@ describe('Login Tests', () => {
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe("\"email\" is required");
+    });
 
-        response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
+    it('should be return a exception of missing password', async () => {
+        const response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
             email: user.email,
             newPassword: '1234567'
         });
@@ -137,8 +95,10 @@ describe('Login Tests', () => {
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe("\"password\" is required");
+    });
 
-        response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
+    it('should be return a exception of missing newPassword', async () => {
+        const response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
             email: user.email,
             password: '123456',
         });
