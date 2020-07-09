@@ -24,4 +24,11 @@ router.get('/test', (request, response) => {
     response.json({ "teste": "teste" });
 });
 
+// router.doc('/doc', (request, response) => {
+//     express.static('public')
+//     response.json({ "teste": "teste" });
+// });
+
+
+
 module.exports.router = router;

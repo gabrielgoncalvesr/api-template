@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BIGINT(11),
         },
         password: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
         },
     });
     return User;
