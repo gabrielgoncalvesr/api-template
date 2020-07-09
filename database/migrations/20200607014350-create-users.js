@@ -28,7 +28,7 @@ module.exports = {
             },
             password: {
                 allowNull: false,
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
             },
             createdAt: {
                 timestamps: true,
