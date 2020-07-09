@@ -107,6 +107,18 @@ describe('Login Tests', () => {
         expect(response.body.message).toBe('incorrect password');
     });
 
+    it('should be return a exception of user not found to password change', async () => {
+        const response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
+            email: 'error@gmail.com',
+            password: '123456',
+            newPassword: '1234567'
+        });
+
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty('message');
+        expect(response.body.message).toBe('user not found');
+    });
+
     it('should be return a exception of missing properties in password change', async () => {
         let response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
             password: '123456',
