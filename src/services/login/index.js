@@ -9,7 +9,7 @@ const authenticate = async (request, response) => {
 
     const user = await getUser(email);
     if (!user) {
-        return response.status(400).json({ message: 'user not found' });
+        return response.status(404).json({ message: 'user not found' });
     }
 
     await comparePassword(password, user.password, (valid) => {
@@ -29,7 +29,7 @@ const changePassword = async (request, response) => {
 
     const user = await getUser(email);
     if (!user) {
-        return response.status(400).json({ message: 'user not found' });
+        return response.status(404).json({ message: 'user not found' });
     }
 
     const validPassword = await comparePassword(password, user.password, (valid) => {

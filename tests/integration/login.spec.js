@@ -77,7 +77,7 @@ describe('Login Tests', () => {
             password: "123456",
         });
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(404);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe("user not found");
     });
