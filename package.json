@@ -1,12 +1,13 @@
 {
     "name": "fazae",
     "version": "1.0.0",
-    "description": "fazae application",
+    "description": "API FAZAE",
     "main": "index.js",
     "scripts": {
         "test": "jest",
         "start": "node src/server.js",
         "dev": "set NODE_ENV=development&& nodemon -r dotenv/config src/server.js",
+        "documentation": "apidoc -i apidoc/config/ -o apidoc/documentation/",
         "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate:undo && sequelize db:migrate && sequelize db:seed:all"
     },
     "author": "Gabriel Reis and Igor Melo",
@@ -29,6 +30,7 @@
         "sequelize-cli": "^5.5.1"
     },
     "devDependencies": {
+        "apidoc": "^0.23.0",
         "jest": "^26.1.0",
         "nodemon": "^2.0.3",
         "supertest": "^4.0.2"
