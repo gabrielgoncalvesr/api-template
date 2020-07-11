@@ -6,6 +6,11 @@ const { validateCPF } = require('../../../utils/functions');
 const createNewUser = async (request, response) => {
     const { cpf, name, email, password, telephoneNumber } = request.body;
 
+    const validCPF = validateCPF(cpf);
+    if (!validCPF) {
+        return response.status(400).json({ message: 'invalid CPF' });
+    }
+
     let user = await getUser({ email });
     if (user != null) {
         return response.status(400).json({ message: 'already exist user with this email' });
@@ -19,11 +24,6 @@ const createNewUser = async (request, response) => {
     user = await getUser({ telephoneNumber });
     if (user != null) {
         return response.status(400).json({ message: 'already exist user with this telephoneNumber' });
-    }
-
-    const validCPF = validateCPF(cpf);
-    if (!validCPF) {
-        return response.status(400).json({ message: 'invalid CPF' });
     }
 
     await cryptPassword(password, async (hash) => {
