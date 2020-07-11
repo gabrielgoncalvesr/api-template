@@ -4,7 +4,7 @@
     "description": "API FAZAE",
     "main": "index.js",
     "scripts": {
-        "test": "jest",
+        "test": "jest --coverage",
         "start": "node src/server.js",
         "dev": "set NODE_ENV=development&& nodemon -r dotenv/config src/server.js",
         "documentation": "apidoc -i apidoc/config/ -o apidoc/documentation/",

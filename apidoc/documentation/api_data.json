@@ -3,6 +3,7 @@
     "type": "post",
     "url": "/authenticate",
     "title": "Authenticate",
+    "version": "1.0.0",
     "name": "Authenticate",
     "group": "Login",
     "parameter": {
@@ -54,7 +55,7 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n    \"email\": \"gabriel@gmail.com\",\n    \"name\": 'Gabriel'\"\n    \"token\": \"eyJhbGciOiJIUGDGddiIsdIkpXVCJ9.eyJzdWIiOj6MTUGFAsa564Nn0._5yhuU7lIwETT9R1TKkMgDJZfRYw\"\n}",
+          "content": "HTTP/1.1 200 OK\n{\n    \"name\": \"João das Neves\",\n    \"email\": \"joaodasneves@gmail.com\",\n    \"token\": \"eyJhbGciOiJIUGDGddiIsdIkpXVCJ9.eyJzdWIiOj6MTUGFAsa564Nn0._5yhuU7lIwETT9R1TKkMgDJZfRYw\"\n}",
           "type": "json"
         }
       ]
@@ -111,7 +112,6 @@
         }
       ]
     },
-    "version": "0.0.0",
     "filename": "apidoc/config/login.js",
     "groupTitle": "Login"
   },
@@ -119,6 +119,7 @@
     "type": "put",
     "url": "/changePassword",
     "title": "Change Password",
+    "version": "1.0.0",
     "name": "Change_Password",
     "group": "Login",
     "header": {
@@ -251,7 +252,6 @@
         }
       ]
     },
-    "version": "0.0.0",
     "filename": "apidoc/config/login.js",
     "groupTitle": "Login"
   },
@@ -259,8 +259,29 @@
     "type": "post",
     "url": "/user",
     "title": "Create User",
+    "version": "1.0.0",
     "name": "Create_User",
     "group": "User",
+    "header": {
+      "fields": {
+        "Headers": [
+          {
+            "group": "Headers",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>Authorization token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Header-Example:",
+          "content": "{\n    \"Authorization\": \"Bearer eyJhbGciOiJIUGDGddiIsdIkpXVCJ9.eyJzdWIiOj6MTUGFAsa564Nn0._5yhuU7lIwETT9R1TKkMgDJZfRYw\"\n}",
+          "type": "json"
+        }
+      ]
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -359,49 +380,43 @@
             "group": "Error 4xx",
             "optional": false,
             "field": "PasswordValidation",
-            "description": "<p>Invalid password.</p>"
+            "description": "<p>The number does not correspond to a valid <code>password</code>.</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
             "field": "TelephoneNumberValidation",
-            "description": "<p>Invalid telephone number.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "CPFLengthValidation",
-            "description": "<p>Invalid length CPF.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "EmailValidation",
-            "description": "<p>Invalid email.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "EmailAlreadyUsed",
-            "description": "<p>Email already used.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "CPFAlreadyUsed",
-            "description": "<p>CPF already used.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "TelephoneNumberAlreadyUsed",
-            "description": "<p>Telephone number already used.</p>"
+            "description": "<p>The number does not correspond to a valid <code>telephoneNumber</code>.</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
             "field": "CPFValidation",
-            "description": "<p>Invalid CPF number.</p>"
+            "description": "<p>The number does not correspond to a valid <code>cpf</code>.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "EmailValidation",
+            "description": "<p>Invalid <code>email</code>.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "EmailnUsed",
+            "description": "<p>The <code>email</code> is in use.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "CPFInUse",
+            "description": "<p>The <code>cpf</code> is in use.</p>"
+          },
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "TelephoneNumberInUsed",
+            "description": "<p>The <code>telephoneNumber</code> is in use.</p>"
           }
         ]
       },
@@ -443,7 +458,7 @@
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"cpf\\\" length must be 11 characters long\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"invalid CPF\"\n}",
           "type": "json"
         },
         {
@@ -465,15 +480,9 @@
           "title": "Error-Response:",
           "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"already exist user with this telephoneNumber\"\n}",
           "type": "json"
-        },
-        {
-          "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"invalid CPF\"\n}",
-          "type": "json"
         }
       ]
     },
-    "version": "0.0.0",
     "filename": "apidoc/config/user.js",
     "groupTitle": "User"
   }

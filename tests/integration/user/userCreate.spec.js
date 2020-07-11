@@ -116,20 +116,6 @@ describe('User Tests', () => {
         expect(response.body.message).toBe('\"password\" with value \"Aa1234567\" fails to match the required pattern: /^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$/');
     });
 
-    it('should be return a exception of cpf length validation', async () => {
-        const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
-            cpf: '222',
-            name: 'teste',
-            password: 'Aa1234567@',
-            email: 'testUser@gmail.com',
-            telephoneNumber: '11900001111'
-        });
-
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe('\"cpf\" length must be 11 characters long');
-    });
-
     it('should be return a exception of email validation', async () => {
         const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
             cpf: '04931124054',
