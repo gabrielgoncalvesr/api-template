@@ -1,5 +1,5 @@
 const express = require('express');
-const { celebrate, Joi, errors, Segments } = require('celebrate');
+const { celebrate, Joi, Segments } = require('celebrate');
 
 const router = express.Router();
 
@@ -19,16 +19,5 @@ router.put('/changePassword', celebrate({
         newPassword: Joi.string().required()
     })
 }), changePassword);
-
-router.get('/test', (request, response) => {
-    response.json({ "teste": "teste" });
-});
-
-// router.doc('/doc', (request, response) => {
-//     express.static('public')
-//     response.json({ "teste": "teste" });
-// });
-
-
 
 module.exports.router = router;
