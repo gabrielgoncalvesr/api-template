@@ -25,6 +25,7 @@ describe('User Tests', () => {
 
     it('should be return a exception of missing name', async () => {
         const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
+            name: "test",
             cpf: "04931124054",
             password: "123456",
             email: "gabriel@gmail.com",
@@ -33,64 +34,12 @@ describe('User Tests', () => {
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"name\" is required");
-    });
-
-    it('should be return a exception of missing cpf', async () => {
-        const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
-            name: "teste",
-            password: "123456",
-            email: "gabriel@gmail.com",
-            telephoneNumber: "11900001111"
-        });
-
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"cpf\" is required");
-    });
-
-    it('should be return a exception of missing password', async () => {
-        const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
-            name: "teste",
-            cpf: "04931124054",
-            email: "gabriel@gmail.com",
-            telephoneNumber: "11900001111"
-        });
-
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"password\" is required");
-    });
-
-    it('should be return a exception of missing email', async () => {
-        const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
-            name: "teste",
-            cpf: "04931124054",
-            password: "123456",
-            telephoneNumber: "11900001111"
-        });
-
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"email\" is required");
-    });
-
-    it('should be return a exception of missing telephoneNumber', async () => {
-        const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
-            name: "teste",
-            cpf: "04931124054",
-            password: "123456",
-            email: "gabriel@gmail.com",
-        });
-
-        expect(response.status).toBe(400);
-        expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"telephoneNumber\" is required");
+        expect(response.body.message).toBe("name must be valid");
     });
 
     it('should be return a exception of teleponeNumber validation', async () => {
         const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
-            name: 'teste',
+            name: 'test test',
             cpf: '04931124054',
             password: 'Aa1234567@',
             email: 'testUser@gmail.com',
@@ -99,12 +48,12 @@ describe('User Tests', () => {
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe('\"telephoneNumber\" with value \"11900001\" fails to match the required pattern: /[0-9]{2}9[0-9]{8}/');
+        expect(response.body.message).toBe('telephoneNumber must be valid');
     });
 
     it('should be return a exception of password validation', async () => {
         const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
-            name: 'teste',
+            name: 'test test',
             cpf: '04931124054',
             password: 'Aa1234567',
             email: 'testUser@gmail.com',
@@ -113,27 +62,27 @@ describe('User Tests', () => {
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe('\"password\" with value \"Aa1234567\" fails to match the required pattern: /^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$/');
+        expect(response.body.message).toBe('password must be valid');
     });
 
     it('should be return a exception of email validation', async () => {
         const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
             cpf: '04931124054',
-            name: 'teste',
+            name: 'test test',
             password: 'Aa1234567@',
-            email: 'testUser@gmail.test',
+            email: 'testUsergmail.test',
             telephoneNumber: '11900001111'
         });
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe('\"email\" must be a valid email');
+        expect(response.body.message).toBe('email must be valid');
     });
 
     it('should be return a exception of email already used', async () => {
         const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
             cpf: '04931124054',
-            name: 'teste',
+            name: 'test test',
             password: 'Aa1234567@',
             email: 'test@test.com',
             telephoneNumber: '11900001111'
@@ -146,7 +95,7 @@ describe('User Tests', () => {
 
     it('should be return a exception of cpf already used', async () => {
         const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
-            name: 'teste',
+            name: 'test test',
             cpf: '63484823755',
             password: 'Aa1234567@',
             email: 'test3@test.com',
@@ -160,7 +109,7 @@ describe('User Tests', () => {
 
     it('should be return a exception of telephoneNumber already used', async () => {
         const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
-            name: 'teste',
+            name: 'test test',
             cpf: '83436425036',
             password: 'Aa1234567@',
             email: 'test3@test.com',
@@ -175,7 +124,7 @@ describe('User Tests', () => {
     it('should be return a exception of cpf validation', async () => {
         const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
             cpf: '11111111111',
-            name: 'teste',
+            name: 'test test',
             password: 'Aa1234567@',
             email: 'test3@test.com',
             telephoneNumber: '11900001111'
@@ -188,7 +137,7 @@ describe('User Tests', () => {
 
     it('should be create a user with success', async () => {
         const response = await request(app).post('/user').set('Authorization', 'Bearer ' + token).send({
-            name: 'teste',
+            name: 'test test',
             cpf: '04931124054',
             password: 'Aa1234567@',
             email: 'test3@test.com',

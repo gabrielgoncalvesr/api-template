@@ -262,26 +262,6 @@ define({ "api": [
     "version": "1.0.0",
     "name": "Create_User",
     "group": "User",
-    "header": {
-      "fields": {
-        "Headers": [
-          {
-            "group": "Headers",
-            "type": "String",
-            "optional": false,
-            "field": "Authorization",
-            "description": "<p>Authorization token.</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Header-Example:",
-          "content": "{\n    \"Authorization\": \"Bearer eyJhbGciOiJIUGDGddiIsdIkpXVCJ9.eyJzdWIiOj6MTUGFAsa564Nn0._5yhuU7lIwETT9R1TKkMgDJZfRYw\"\n}",
-          "type": "json"
-        }
-      ]
-    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -350,55 +330,37 @@ define({ "api": [
             "group": "Error 4xx",
             "optional": false,
             "field": "CPFRequired",
-            "description": "<p>The <code>cpf</code> is required.</p>"
+            "description": "<p>The <code>cpf</code> must be valid.</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
             "field": "NameRequired",
-            "description": "<p>The <code>name</code> is required.</p>"
+            "description": "<p>The <code>name</code> must be valid.</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
             "field": "EmailRequired",
-            "description": "<p>The <code>email</code> is required.</p>"
+            "description": "<p>The <code>email</code> must be valid.</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
             "field": "PasswordRequired",
-            "description": "<p>The <code>password</code> is required.</p>"
+            "description": "<p>The <code>password</code> must be valid.</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
             "field": "TelephoneNumberRequired",
-            "description": "<p>The <code>telephoneNumber</code> is required.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "PasswordValidation",
-            "description": "<p>The number does not correspond to a valid <code>password</code>.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "TelephoneNumberValidation",
-            "description": "<p>The number does not correspond to a valid <code>telephoneNumber</code>.</p>"
+            "description": "<p>The <code>telephoneNumber</code> must be valid.</p>"
           },
           {
             "group": "Error 4xx",
             "optional": false,
             "field": "CPFValidation",
             "description": "<p>The number does not correspond to a valid <code>cpf</code>.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "EmailValidation",
-            "description": "<p>Invalid <code>email</code>.</p>"
           },
           {
             "group": "Error 4xx",
@@ -423,47 +385,32 @@ define({ "api": [
       "examples": [
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"cpf\\\" is required\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"cpf must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"name\\\" is required\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"name must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"email\\\" is required\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"email must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"password\\\" is required\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"telephoneNumber must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"telephoneNumber\\\" is required\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"password\\\" with value \\\"Aa1234567\\\" fails to match the required pattern: /^(?=.*[A-Za-z])(?=.*\\\\d)(?=.*[@$!%*#?&])[A-Za-z\\\\d@$!%*#?&]{8,}$/\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"telephoneNumber\\\" with value \\\"11900001\\\" fails to match the required pattern: /[0-9]{2}9[0-9]{8}/\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"telephoneNumber must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
           "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"invalid CPF\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"email\\\" must be a valid email'\"\n}",
           "type": "json"
         },
         {

@@ -4,7 +4,13 @@ const { getUser, createUser } = require('../../repository/user');
 const { validateCPF } = require('../../../utils/functions');
 
 const createNewUser = async (request, response) => {
-    const { cpf, name, email, password, telephoneNumber } = request.body;
+    const data = request.body;
+
+    const cpf = data.cpf.trim();
+    const name = data.name.trim();
+    const password = data.password.trim();
+    const email = data.email.trim().toLowerCase();
+    const telephoneNumber = data.telephoneNumber.trim();
 
     const validCPF = validateCPF(cpf);
     if (!validCPF) {
