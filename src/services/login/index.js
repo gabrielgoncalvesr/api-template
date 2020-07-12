@@ -18,7 +18,8 @@ const authenticate = async (request, response) => {
         }
 
         response.json({
-            ...user,
+            name: user.name,
+            email: user.email,
             token: JWT.sign({ sub: user.id }, process.env.API_SECRET_JWT)
         });
     });

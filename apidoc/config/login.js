@@ -1,5 +1,6 @@
 /**
 * @api  {post}  /authenticate   Authenticate
+* @apiVersion 1.0.0
 * @apiName  Authenticate
 * @apiGroup Login
 *
@@ -13,8 +14,8 @@
 * @apiSuccessExample    Success-Response:
 *       HTTP/1.1 200 OK
 *       {
-*           "email": "gabriel@gmail.com",
-*           "name": 'Gabriel'"
+*           "name": "João das Neves",
+*           "email": "joaodasneves@gmail.com",
 *           "token": "eyJhbGciOiJIUGDGddiIsdIkpXVCJ9.eyJzdWIiOj6MTUGFAsa564Nn0._5yhuU7lIwETT9R1TKkMgDJZfRYw"
 *       }
 *
@@ -53,6 +54,7 @@
 
 /**
 * @api  {put}   /changePassword Change Password
+* @apiVersion 1.0.0
 * @apiName  Change Password
 * @apiGroup Login
 *
