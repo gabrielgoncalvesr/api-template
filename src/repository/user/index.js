@@ -18,9 +18,6 @@ const getUser = async ({ cpf, email, telephoneNumber }) => {
         where['telephoneNumber'] = telephoneNumber;
     }
 
-
-    console.log(where)
-
     return await User.findOne({
         where,
         raw: true,
