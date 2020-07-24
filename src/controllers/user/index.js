@@ -7,11 +7,11 @@ const { createNewUser } = require('../../services/user')
 
 router.post('/', celebrate({
     [Segments.BODY]: Joi.object().keys({
-        cpf: Joi.string().required(),
-        name: Joi.string().required(),
-        telephoneNumber: Joi.string().required().regex(/[0-9]{2}9[0-9]{8}/),
-        email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-        password: Joi.string().required().regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/),
+        cpf: Joi.string().required().error(new Error('cpf must be valid')),
+        name: Joi.string().required().regex(/[a-zA-Z]{1,} [a-zA-Z]{1,}/).error(new Error('name must be valid')),
+        telephoneNumber: Joi.string().required().regex(/[0-9]{2}9[0-9]{8}/).error(new Error('telephoneNumber must be valid')),
+        email: Joi.string().required().email({ minDomainSegments: 2, tlds: { allow: ['com'] } }).error(new Error('email must be valid')),
+        password: Joi.string().required().regex(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/).error(new Error('password must be valid')),
     })
 }), createNewUser);
 

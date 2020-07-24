@@ -1,9 +1,14 @@
 const express = require('express');
-const { celebrate, Joi, errors, Segments } = require('celebrate');
+const { celebrate, Joi, Segments } = require('celebrate');
 
 const router = express.Router();
 
-const { authenticate, changePassword } = require('../../services/login')
+const {
+    authenticate,
+    changePassword,
+    passwordResetRequest,
+    passwordResetConfirm,
+} = require('../../services/login')
 
 router.post('/authenticate', celebrate({
     [Segments.BODY]: Joi.object().keys({
@@ -20,15 +25,17 @@ router.put('/changePassword', celebrate({
     })
 }), changePassword);
 
-router.get('/test', (request, response) => {
-    response.json({ "teste": "teste" });
-});
+router.post('/passwordResetRequest', celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        email: Joi.string().required()
+    })
+}), passwordResetRequest);
 
-// router.doc('/doc', (request, response) => {
-//     express.static('public')
-//     response.json({ "teste": "teste" });
-// });
-
-
+router.put('/passwordResetConfirm', celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        token: Joi.string().required(),
+        newPassword: Joi.string().required(),
+    })
+}), passwordResetConfirm);
 
 module.exports.router = router;
