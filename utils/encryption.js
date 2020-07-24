@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 const cryptPassword = async (password, callback) => {
     return await bcrypt.genSalt(10, function (err, salt) {
@@ -22,7 +23,12 @@ const comparePassword = async (password, hash, callback) => {
     });
 };
 
+const generateToken = () => {
+    return crypto.randomBytes(48).toString('base64');
+}
+
 module.exports = {
     cryptPassword,
+    generateToken,
     comparePassword,
 }
