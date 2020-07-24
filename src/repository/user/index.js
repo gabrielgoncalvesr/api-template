@@ -2,22 +2,7 @@ const Sequelize = require('sequelize');
 
 const { User } = require('../../../database/models');
 
-const getUser = async ({ cpf, email, telephoneNumber }) => {
-    if (!cpf && !email && !telephoneNumber) {
-        return null;
-    }
-
-    const where = {};
-    if (cpf) {
-        where['cpf'] = cpf;
-    }
-    if (email) {
-        where['email'] = email;
-    }
-    if (telephoneNumber) {
-        where['telephoneNumber'] = telephoneNumber;
-    }
-
+const getUser = async (where) => {
     return await User.findOne({
         where,
         raw: true,
