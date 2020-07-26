@@ -31,6 +31,7 @@ const createUser = async ({ cpf, name, email, password, telephoneNumber }) => {
         telephoneNumber,
         createdAt: new Date(),
         updatedAt: new Date(),
+        passwordResetToken: null,
     });
 }
 

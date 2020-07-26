@@ -34,7 +34,7 @@ describe('User Tests', () => {
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("name must be valid");
+        expect(response.body.message).toBe("\"name\" must be valid");
     });
 
     it('should be return a exception of teleponeNumber validation', async () => {
@@ -48,7 +48,7 @@ describe('User Tests', () => {
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe('telephoneNumber must be valid');
+        expect(response.body.message).toBe('\"telephoneNumber\" must be valid');
     });
 
     it('should be return a exception of password validation', async () => {
@@ -62,7 +62,7 @@ describe('User Tests', () => {
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe('password must be valid');
+        expect(response.body.message).toBe('\"password\" must be valid');
     });
 
     it('should be return a exception of email validation', async () => {
@@ -76,7 +76,7 @@ describe('User Tests', () => {
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe('email must be valid');
+        expect(response.body.message).toBe('\"email\" must be valid');
     });
 
     it('should be return a exception of email already used', async () => {
@@ -88,7 +88,7 @@ describe('User Tests', () => {
             telephoneNumber: '11900001111'
         });
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(409);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe('already exist user with this email');
     });
@@ -102,7 +102,7 @@ describe('User Tests', () => {
             telephoneNumber: '11900002020'
         });
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(409);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe('already exist user with this cpf');
     });
@@ -116,7 +116,7 @@ describe('User Tests', () => {
             telephoneNumber: '11900000000'
         });
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(409);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe('already exist user with this telephoneNumber');
     });
@@ -130,7 +130,7 @@ describe('User Tests', () => {
             telephoneNumber: '11900001111'
         });
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(422);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe('invalid CPF');
     });

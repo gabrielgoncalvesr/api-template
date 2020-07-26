@@ -2,7 +2,6 @@ const request = require('supertest');
 
 const app = require('../../../src/app.js');
 const models = require('../../../database/models');
-const { User } = require('../../../database/models');
 
 describe('Login Tests', () => {
 
@@ -27,14 +26,14 @@ describe('Login Tests', () => {
         const response = await request(app).post('/authenticate').send({ email });
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"password\" is required");
+        expect(response.body.message).toBe("\"password\" must be valid");
     });
 
     it('should be return a exception of missing password', async () => {
         const response = await request(app).post('/authenticate').send({ password });
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"email\" is required");
+        expect(response.body.message).toBe("\"email\" must be valid");
     });
 
     it('should be return a exception of wrong password', async () => {
@@ -43,7 +42,7 @@ describe('Login Tests', () => {
             password: "errorPassword",
         });
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(422);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe("incorrect password");
     });

@@ -2,15 +2,11 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
 const cryptPassword = async (password, callback) => {
-    return await bcrypt.genSalt(10, function (err, salt) {
-        if (err) {
-            return callback(err);
-        }
-
+    return await bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(password, salt).then(result => {
             return callback(result);
         }).catch(err => {
-            return callback(err);
+            return callback(false);
         });
     });
 };
