@@ -499,9 +499,9 @@ define({ "api": [
     },
     "success": {
       "fields": {
-        "Success 200": [
+        "201": [
           {
-            "group": "Success 200",
+            "group": "201",
             "type": "String",
             "optional": false,
             "field": "message",
@@ -512,7 +512,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 OK\n{\n    \"message\": \"user created with sucess\"\n}",
+          "content": "HTTP/1.1 201 Created\n{\n    \"message\": \"user created with sucess\"\n}",
           "type": "json"
         }
       ]

@@ -1,6 +1,7 @@
 const JWT = require('jsonwebtoken');
 
 const { sendEmail } = require('../../../utils/email');
+const { debug, error, info } = require('../../../utils/log');
 const { cryptPassword, comparePassword, generateToken } = require('../../../utils/encryption');
 
 const { getUser, updateUser } = require('../../repository/user');
@@ -10,11 +11,13 @@ const authenticate = async (request, response) => {
 
     const user = await getUser({ email });
     if (!user) {
+        debug(`user not found with email: ${email}`);
         return response.status(404).json({ message: 'user not found' });
     }
 
     await comparePassword(password, user.password, (valid) => {
         if (!valid) {
+            debug(`incorrect password to user: ${email}`);
             return response.status(422).json({ message: 'incorrect password' });
         }
 
@@ -31,6 +34,7 @@ const changePassword = async (request, response) => {
 
     const user = await getUser({ email });
     if (!user) {
+        debug(`user not found with email: ${email}`);
         return response.status(404).json({ message: 'user not found' });
     }
 
@@ -39,6 +43,7 @@ const changePassword = async (request, response) => {
     });
 
     if (!validPassword) {
+        debug(`incorrect password to user: ${email}`);
         return response.status(422).json({ message: 'incorrect password' });
     }
 
@@ -46,6 +51,7 @@ const changePassword = async (request, response) => {
         user.password = hash;
         updateUser(user);
 
+        info(`password changed with success to user: ${user.email}`);
         response.json({ message: 'password changed with success' });
     });
 }
@@ -55,6 +61,7 @@ const passwordResetRequest = async (request, response) => {
 
     const user = await getUser({ email });
     if (!user) {
+        debug(`user not found with email: ${email}`);
         return response.status(404).json({ message: 'user not found' });
     }
 
@@ -66,15 +73,18 @@ const passwordResetRequest = async (request, response) => {
     const subject = "Reset Password Request";
     const content = `Password request to this email. Access the url to change password ${process.env.APPLICATION_URL}/resetPassword?token=${token}`;
 
-    const message = await sendEmail({ content, subject, to: email });
-    if (message) {
-        return response.json({ message: 'email sent with success' });
-    } else {
-        user.passwordResetToken = null;
-        updateUser(user);
+    sendEmail({ content, subject, to: email })
+        .then(result => {
+            info(`email sent with success to user: ${email}`);
+            return response.json({ message: 'email sent with success' });
+        })
+        .catch(err => {
+            user.passwordResetToken = null;
+            updateUser(user);
 
-        return response.status(502).json({ message: 'error to send email, try again' });
-    }
+            error(`error to send email to user: ${user.email}. error: ${err.message}`);
+            return response.status(502).json({ message: 'error to send email, try again' });
+        });
 }
 
 const passwordResetConfirm = async (request, response) => {
@@ -82,6 +92,7 @@ const passwordResetConfirm = async (request, response) => {
 
     const user = await getUser({ passwordResetToken: token });
     if (!user) {
+        debug(`invalid token: ${token}`);
         return response.status(401).json({ message: 'invalid token' });
     }
 
@@ -90,7 +101,8 @@ const passwordResetConfirm = async (request, response) => {
         user.passwordResetToken = null;
         updateUser(user);
 
-        response.json({ message: 'password changed with success' });
+        info(`password changed with success to user: ${user.email}`);
+        return response.json({ message: 'password changed with success' });
     });
 }
 
