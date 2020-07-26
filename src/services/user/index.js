@@ -8,22 +8,22 @@ const createNewUser = async (request, response) => {
 
     const validCPF = validateCPF(cpf);
     if (!validCPF) {
-        return response.status(400).json({ message: 'invalid CPF' });
+        return response.status(422).json({ message: 'invalid CPF' });
     }
 
     let user = await getUser({ email });
     if (user != null) {
-        return response.status(400).json({ message: 'already exist user with this email' });
+        return response.status(409).json({ message: 'already exist user with this email' });
     }
 
     user = await getUser({ cpf });
     if (user != null) {
-        return response.status(400).json({ message: 'already exist user with this cpf' });
+        return response.status(409).json({ message: 'already exist user with this cpf' });
     }
 
     user = await getUser({ telephoneNumber });
     if (user != null) {
-        return response.status(400).json({ message: 'already exist user with this telephoneNumber' });
+        return response.status(409).json({ message: 'already exist user with this telephoneNumber' });
     }
 
     await cryptPassword(password, async (hash) => {

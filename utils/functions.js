@@ -25,6 +25,8 @@ const validateCPF = (cpf) => {
         add += parseInt(cpf.charAt(i)) * (10 - i);
     }
 
+    console.log("add: " + add)
+
     rev = 11 - (add % 11);
     if (rev == 10 || rev == 11) {
         rev = 0;
