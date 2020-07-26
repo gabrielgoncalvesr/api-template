@@ -1,6 +1,8 @@
 const { cryptPassword } = require('../../../utils/encryption');
 
 const { getUser, createUser } = require('../../repository/user');
+
+const { debug, info } = require('../../../utils/log');
 const { validateCPF } = require('../../../utils/functions');
 
 const createNewUser = async (request, response) => {
@@ -8,21 +10,25 @@ const createNewUser = async (request, response) => {
 
     const validCPF = validateCPF(cpf);
     if (!validCPF) {
+        debug(`invalid cpf to: ${cpf}`);
         return response.status(422).json({ message: 'invalid CPF' });
     }
 
     let user = await getUser({ email });
     if (user != null) {
+        debug(`already exist user with this email: ${email}`);
         return response.status(409).json({ message: 'already exist user with this email' });
     }
 
     user = await getUser({ cpf });
     if (user != null) {
+        debug(`already exist user with this cpf: ${cpf}`);
         return response.status(409).json({ message: 'already exist user with this cpf' });
     }
 
     user = await getUser({ telephoneNumber });
     if (user != null) {
+        debug(`already exist user with this telephoneNumber: ${telephoneNumber}`);
         return response.status(409).json({ message: 'already exist user with this telephoneNumber' });
     }
 
@@ -35,7 +41,8 @@ const createNewUser = async (request, response) => {
             email: email.toLowerCase(),
         });
 
-        return response.status(200).json({ message: 'user created with sucess' });
+        info(`user created with sucess with email: ${email}`);
+        return response.status(201).json({ message: 'user created with sucess' });
     });
 }
 

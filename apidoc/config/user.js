@@ -11,9 +11,9 @@
 * @apiParam {String} password User password.
 * @apiParam {String} telephoneNumber User telephoneNumber.
 *
-* @apiSuccess {String} message Success message.
+* @apiSuccess (201) {String} message Success message.
 * @apiSuccessExample Success-Response:
-*       HTTP/1.1 200 OK
+*       HTTP/1.1 201 Created
 *       {
 *           "message": "user created with sucess"
 *       }
