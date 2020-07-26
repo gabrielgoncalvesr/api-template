@@ -3,6 +3,7 @@ define({ "api": [
     "type": "post",
     "url": "/authenticate",
     "title": "Authenticate",
+    "description": "<p>This service, will authenticate user in api, generating a token to do requests in api.</p>",
     "version": "1.0.0",
     "name": "Authenticate",
     "group": "Login",
@@ -62,27 +63,31 @@ define({ "api": [
     },
     "error": {
       "fields": {
-        "Error 4xx": [
+        "400": [
           {
-            "group": "Error 4xx",
+            "group": "400",
             "optional": false,
-            "field": "EmailRequired",
-            "description": "<p>The <code>email</code> is required.</p>"
+            "field": "EmailInvalid",
+            "description": "<p>The <code>email</code> must be valid.</p>"
           },
           {
-            "group": "Error 4xx",
+            "group": "400",
             "optional": false,
-            "field": "PasswordRequired",
-            "description": "<p>The <code>password</code> is required.</p>"
-          },
+            "field": "PasswordInvalid",
+            "description": "<p>The <code>password</code> must be valid.</p>"
+          }
+        ],
+        "404": [
           {
-            "group": "Error 4xx",
+            "group": "404",
             "optional": false,
             "field": "UserNotFound",
             "description": "<p>User not found.</p>"
-          },
+          }
+        ],
+        "422": [
           {
-            "group": "Error 4xx",
+            "group": "422",
             "optional": false,
             "field": "WrongPassword",
             "description": "<p>Wrong <code>password</code>.</p>"
@@ -92,22 +97,22 @@ define({ "api": [
       "examples": [
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"email\\\" is required\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"email\\\" must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"\\\"password\\\" is required\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"password\\\" must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 404 Bad Request\n{\n  \"message\": \"user not found\"\n}",
+          "content": "HTTP/1.1 404 Bad Request\n{\n    \"message\": \"user not found\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"incorrect password\"\n}",
+          "content": "HTTP/1.1 422 Unprocessable Entity\n{\n    \"message\": \"incorrect password\"\n}",
           "type": "json"
         }
       ]
@@ -119,6 +124,7 @@ define({ "api": [
     "type": "put",
     "url": "/changePassword",
     "title": "Change Password",
+    "description": "<p>This service, will change the current user password to a new passowrd.</p>",
     "version": "1.0.0",
     "name": "Change_Password",
     "group": "Login",
@@ -191,36 +197,233 @@ define({ "api": [
     },
     "error": {
       "fields": {
-        "Error 4xx": [
+        "400": [
           {
-            "group": "Error 4xx",
+            "group": "400",
             "optional": false,
-            "field": "EmailRequired",
-            "description": "<p>The <code>email</code> is required.</p>"
+            "field": "EmailInvalid",
+            "description": "<p>The <code>email</code> must be valid.</p>"
           },
           {
-            "group": "Error 4xx",
+            "group": "400",
             "optional": false,
-            "field": "PasswordRequired",
-            "description": "<p>The <code>password</code> is required.</p>"
+            "field": "PasswordInvalid",
+            "description": "<p>The <code>password</code> must be valid.</p>"
           },
           {
-            "group": "Error 4xx",
+            "group": "400",
             "optional": false,
-            "field": "NewPasswordRequired",
-            "description": "<p>The <code>newPassword</code> is required.</p>"
-          },
+            "field": "NewPasswordInvalid",
+            "description": "<p>The <code>newPassword</code> must be valid.</p>"
+          }
+        ],
+        "404": [
           {
-            "group": "Error 4xx",
+            "group": "404",
             "optional": false,
             "field": "UserNotFound",
             "description": "<p>User not found.</p>"
-          },
+          }
+        ],
+        "422": [
           {
-            "group": "Error 4xx",
+            "group": "422",
             "optional": false,
             "field": "WrongPassword",
             "description": "<p>Wrong <code>password</code>.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"email\\\" must be valid\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"password\\\" must be valid\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"newPassword\\\" must be valid\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Bad Request\n{\n    \"message\": \"user not found\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 422 Bad Request\n{\n    \"message\": \"incorrect password\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "apidoc/config/login.js",
+    "groupTitle": "Login"
+  },
+  {
+    "type": "put",
+    "url": "/passwordResetConfirm",
+    "title": "Password Reset Confirm",
+    "description": "<p>This service, will change password to a new password, if the user is authentic, confirming the token sent in the email.</p>",
+    "version": "1.0.0",
+    "name": "Password_Reset_Confirm",
+    "group": "Login",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>Token.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "newPassword",
+            "description": "<p>New password.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Success Message.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"message\": \"password changed with success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "400": [
+          {
+            "group": "400",
+            "optional": false,
+            "field": "TokenInvalid",
+            "description": "<p>The <code>token</code> must be valid.</p>"
+          },
+          {
+            "group": "400",
+            "optional": false,
+            "field": "NewPasswordInvalid",
+            "description": "<p>The <code>newPassword</code> must be valid.</p>"
+          }
+        ],
+        "401": [
+          {
+            "group": "401",
+            "optional": false,
+            "field": "InvalidToken",
+            "description": "<p>Invalid Token.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"token\\\" must be valid\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"newPassword\\\" must be valid\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 401 Unauthorized\n{\n    \"message\": \"invalid token\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "apidoc/config/login.js",
+    "groupTitle": "Login"
+  },
+  {
+    "type": "post",
+    "url": "/passwordResetRequest",
+    "title": "Password Reset Request",
+    "description": "<p>This service, will send a email with link to reset user password.</p>",
+    "version": "1.0.0",
+    "name": "Password_Reset_Request",
+    "group": "Login",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>User email.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Success Message.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n    \"message\": \"email sent with success\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "400": [
+          {
+            "group": "400",
+            "optional": false,
+            "field": "EmailInvalid",
+            "description": "<p>The <code>email</code> must be valid.</p>"
+          }
+        ],
+        "404": [
+          {
+            "group": "404",
+            "optional": false,
+            "field": "UserNotFound",
+            "description": "<p>User not found.</p>"
+          }
+        ],
+        "502": [
+          {
+            "group": "502",
+            "optional": false,
+            "field": "EmailError",
+            "description": "<p>Error to send e-mail.</p>"
           }
         ]
       },
@@ -232,22 +435,12 @@ define({ "api": [
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"password\\\" is required\"\n}",
+          "content": "HTTP/1.1 404 Not Found\n{\n    \"message\": \"user not found\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"\\\"newPassword\\\" is required\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "Error-Response:",
-          "content": "HTTP/1.1 404 Bad Request\n{\n    \"message\": \"user not found\"\n}",
-          "type": "json"
-        },
-        {
-          "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"incorrect password\"\n}",
+          "content": "HTTP/1.1 502 Bad Gateway\n{\n    \"message\": \"error to send email, try again\"\n}",
           "type": "json"
         }
       ]
@@ -259,6 +452,7 @@ define({ "api": [
     "type": "post",
     "url": "/user",
     "title": "Create User",
+    "description": "<p>This service, will change password to a new password, if the user is authentic, confirming the token sent in the email.</p>",
     "version": "1.0.0",
     "name": "Create_User",
     "group": "User",
@@ -325,107 +519,111 @@ define({ "api": [
     },
     "error": {
       "fields": {
-        "Error 4xx": [
+        "400": [
           {
-            "group": "Error 4xx",
+            "group": "400",
             "optional": false,
-            "field": "CPFRequired",
+            "field": "CPFInvalid",
             "description": "<p>The <code>cpf</code> must be valid.</p>"
           },
           {
-            "group": "Error 4xx",
+            "group": "400",
             "optional": false,
-            "field": "NameRequired",
+            "field": "NameInvalid",
             "description": "<p>The <code>name</code> must be valid.</p>"
           },
           {
-            "group": "Error 4xx",
+            "group": "400",
             "optional": false,
-            "field": "EmailRequired",
+            "field": "EmailInvalid",
             "description": "<p>The <code>email</code> must be valid.</p>"
           },
           {
-            "group": "Error 4xx",
+            "group": "400",
             "optional": false,
-            "field": "PasswordRequired",
+            "field": "PasswordInvalid",
             "description": "<p>The <code>password</code> must be valid.</p>"
           },
           {
-            "group": "Error 4xx",
+            "group": "400",
             "optional": false,
-            "field": "TelephoneNumberRequired",
+            "field": "TelephoneNumberInvalid",
             "description": "<p>The <code>telephoneNumber</code> must be valid.</p>"
-          },
+          }
+        ],
+        "409": [
           {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "CPFValidation",
-            "description": "<p>The number does not correspond to a valid <code>cpf</code>.</p>"
-          },
-          {
-            "group": "Error 4xx",
-            "optional": false,
-            "field": "EmailnUsed",
-            "description": "<p>The <code>email</code> is in use.</p>"
-          },
-          {
-            "group": "Error 4xx",
+            "group": "409",
             "optional": false,
             "field": "CPFInUse",
             "description": "<p>The <code>cpf</code> is in use.</p>"
           },
           {
-            "group": "Error 4xx",
+            "group": "409",
             "optional": false,
-            "field": "TelephoneNumberInUsed",
+            "field": "EmailnUse",
+            "description": "<p>The <code>email</code> is in use.</p>"
+          },
+          {
+            "group": "409",
+            "optional": false,
+            "field": "TelephoneNumberInUse",
             "description": "<p>The <code>telephoneNumber</code> is in use.</p>"
+          }
+        ],
+        "422": [
+          {
+            "group": "422",
+            "optional": false,
+            "field": "CPFValidation",
+            "description": "<p>The number does not correspond to a valid <code>cpf</code>.</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"cpf must be valid\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"cpf must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"name must be valid\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"name must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"email must be valid\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n  {\n      \"message\": \"email must be valid\"\n  }",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"telephoneNumber must be valid\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"password must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"telephoneNumber must be valid\"\n}",
+          "content": "HTTP/1.1 400 Bad Request\n{\n    \"message\": \"telephoneNumber must be valid\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"invalid CPF\"\n}",
+          "content": "HTTP/1.1 422 Unprocessable Entity\n{\n    \"message\": \"invalid CPF\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"already exist user with this email\"\n}",
+          "content": "HTTP/1.1 409 Conflict\n{\n    \"message\": \"already exist user with this cpf\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"already exist user with this cpf\"\n}",
+          "content": "HTTP/1.1 409 Conflict\n{\n    \"message\": \"already exist user with this email\"\n}",
           "type": "json"
         },
         {
           "title": "Error-Response:",
-          "content": "HTTP/1.1 400 Bad Request\n{\n  \"message\": \"already exist user with this telephoneNumber\"\n}",
+          "content": "HTTP/1.1 409 Conflict\n{\n    \"message\": \"already exist user with this telephoneNumber\"\n}",
           "type": "json"
         }
       ]

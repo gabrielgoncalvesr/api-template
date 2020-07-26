@@ -15,7 +15,7 @@ const authenticate = async (request, response) => {
 
     await comparePassword(password, user.password, (valid) => {
         if (!valid) {
-            return response.status(400).json({ message: 'incorrect password' });
+            return response.status(422).json({ message: 'incorrect password' });
         }
 
         response.json({
@@ -39,7 +39,7 @@ const changePassword = async (request, response) => {
     });
 
     if (!validPassword) {
-        return response.status(400).json({ message: 'incorrect password' });
+        return response.status(422).json({ message: 'incorrect password' });
     }
 
     await cryptPassword(newPassword, (hash) => {
@@ -68,9 +68,12 @@ const passwordResetRequest = async (request, response) => {
 
     const message = await sendEmail({ content, subject, to: email });
     if (message) {
-        return response.status(200).json({ message: 'email sent with success' });
+        return response.json({ message: 'email sent with success' });
     } else {
-        return response.status(400).json({ message: 'error to send email, try again' });
+        user.passwordResetToken = null;
+        updateUser(user);
+
+        return response.status(502).json({ message: 'error to send email, try again' });
     }
 }
 
@@ -79,12 +82,10 @@ const passwordResetConfirm = async (request, response) => {
 
     const user = await getUser({ passwordResetToken: token });
     if (!user) {
-        return response.status(404).json({ message: 'invalid token' });
+        return response.status(401).json({ message: 'invalid token' });
     }
 
     await cryptPassword(newPassword, (hash) => {
-        console.log(hash)
-
         user.password = hash;
         user.passwordResetToken = null;
         updateUser(user);

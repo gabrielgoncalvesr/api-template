@@ -4,13 +4,7 @@ const { getUser, createUser } = require('../../repository/user');
 const { validateCPF } = require('../../../utils/functions');
 
 const createNewUser = async (request, response) => {
-    const data = request.body;
-
-    const cpf = data.cpf.trim();
-    const name = data.name.trim();
-    const password = data.password.trim();
-    const email = data.email.trim().toLowerCase();
-    const telephoneNumber = data.telephoneNumber.trim();
+    const { cpf, name, password, email, telephoneNumber } = request.body;
 
     const validCPF = validateCPF(cpf);
     if (!validCPF) {
@@ -36,9 +30,9 @@ const createNewUser = async (request, response) => {
         await createUser({
             cpf,
             name,
-            email,
             password: hash,
             telephoneNumber,
+            email: email.toLowerCase(),
         });
 
         return response.status(200).json({ message: 'user created with sucess' });

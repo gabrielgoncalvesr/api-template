@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require("body-parser");
 
 const routes = require('./routes');
+const { trimmer } = require('../utils/functions');
 const errorHandler = require('../utils/errorHandle');
 const JWT = require('./services/authentication/middleware');
 
@@ -12,6 +13,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(trimmer);
 
 app.use('/documentation', express.static(path.join(__dirname, '../apidoc/documentation')));
 

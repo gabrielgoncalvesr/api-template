@@ -51,4 +51,14 @@ const validateCPF = (cpf) => {
     return true;
 }
 
+const trimmer = (req, res, next) => {
+    if (req.method === 'POST') {
+        for (const [key, value] of Object.entries(req.body)) {
+            req.body[key] = value.trim();
+        }
+    }
+    next();
+}
+
+module.exports.trimmer = trimmer;
 module.exports.validateCPF = validateCPF;
