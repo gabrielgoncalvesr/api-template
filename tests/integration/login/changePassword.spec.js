@@ -42,7 +42,7 @@ describe('Login Tests', () => {
         const response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
             email: user.email,
             password: '123456',
-            newPassword: '1234567'
+            newPassword: '12345678A@'
         });
 
         expect(response.status).toBe(200);
@@ -55,10 +55,10 @@ describe('Login Tests', () => {
         const response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
             email: user.email,
             password: 'AAAAAAAA',
-            newPassword: '1234567'
+            newPassword: '12345678A@'
         });
 
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(422);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe('incorrect password');
     });
@@ -67,7 +67,7 @@ describe('Login Tests', () => {
         const response = await request(app).put('/changePassword').set('Authorization', 'Bearer ' + token).send({
             email: 'error@gmail.com',
             password: '123456',
-            newPassword: '1234567'
+            newPassword: '12345678A@'
         });
 
         expect(response.status).toBe(404);
@@ -83,7 +83,7 @@ describe('Login Tests', () => {
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"email\" is required");
+        expect(response.body.message).toBe("\"email\" must be valid");
     });
 
     it('should be return a exception of missing password', async () => {
@@ -94,7 +94,7 @@ describe('Login Tests', () => {
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"password\" is required");
+        expect(response.body.message).toBe("\"password\" must be valid");
     });
 
     it('should be return a exception of missing newPassword', async () => {
@@ -105,6 +105,6 @@ describe('Login Tests', () => {
 
         expect(response.status).toBe(400);
         expect(response.body).toHaveProperty('message');
-        expect(response.body.message).toBe("\"newPassword\" is required");
+        expect(response.body.message).toBe("\"newPassword\" must be valid");
     });
 })
