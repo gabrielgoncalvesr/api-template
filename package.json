@@ -8,8 +8,8 @@
         "test:coverage": "jest --coverage",
         "test:unit": "jest unit",
         "test:integration": "jest integration",
-        "start": "node src/server.js",
-        "dev": "set NODE_ENV=development&& nodemon -r dotenv/config src/server.js",
+        "start": "node -r pino-debug src/server.js | npx pino-colada",
+        "dev": "nodemon -r dotenv/config -r pino-debug src/server.js | npx pino-colada",
         "documentation": "apidoc -i apidoc/config/ -o apidoc/documentation/",
         "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate:undo && sequelize db:migrate && sequelize db:seed:all"
     },
@@ -24,12 +24,16 @@
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
         "express-jwt": "^5.3.3",
+        "express-pino-logger": "^5.0.0",
         "jwt-simple": "^0.5.6",
         "mysql2": "^2.1.0",
         "node-fetch": "^2.6.0",
         "nodemailer": "^6.4.10",
         "passport": "^0.4.1",
         "passport-jwt": "^4.0.0",
+        "pino": "^6.4.1",
+        "pino-colada": "^2.0.1",
+        "pino-debug": "^1.3.0",
         "sequelize": "^5.21.8",
         "sequelize-cli": "^5.5.1"
     },
@@ -37,6 +41,7 @@
         "apidoc": "^0.23.0",
         "jest": "^26.1.0",
         "nodemon": "^2.0.3",
+        "pino-pretty": "^4.1.0",
         "supertest": "^4.0.2"
     }
 }
