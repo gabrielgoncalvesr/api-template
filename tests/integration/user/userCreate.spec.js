@@ -144,7 +144,7 @@ describe('User Tests', () => {
             telephoneNumber: '11900001111'
         });
 
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         expect(response.body).toHaveProperty('message');
         expect(response.body.message).toBe('user created with sucess');
 
