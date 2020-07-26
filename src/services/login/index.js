@@ -71,7 +71,7 @@ const passwordResetRequest = async (request, response) => {
     updateUser(user);
 
     const subject = "Reset Password Request";
-    const content = `Password request to this email. Access the url to change password ${process.env.APPLICATION_URL}/resetPassword?token=${token}`;
+    const content = `Password request to this email. Access the url to change password ${process.env.FRONT_URL}/resetPassword?token=${token}`;
 
     sendEmail({ content, subject, to: email })
         .then(result => {
